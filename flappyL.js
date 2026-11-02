@@ -92,6 +92,109 @@ function launchFlappyL() {
     let pipes = [];
     let pipeWidth = 44;
     let frameCount = 0;
+    let audioContext;
+
+    function getAudioContext() {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return null;
+
+        if (!audioContext) {
+            audioContext = new AudioContext();
+        }
+        if (audioContext.state === 'suspended') {
+            audioContext.resume().catch(error => {
+                console.warn('Flappy L audio could not resume.', error);
+            });
+        }
+        return audioContext;
+    }
+
+    function createNoiseSource(context, duration) {
+        const buffer = context.createBuffer(1, Math.ceil(context.sampleRate * duration), context.sampleRate);
+        const samples = buffer.getChannelData(0);
+        for (let i = 0; i < samples.length; i++) {
+            samples[i] = Math.random() * 2 - 1;
+        }
+
+        const source = context.createBufferSource();
+        source.buffer = buffer;
+        return source;
+    }
+
+    function playJumpSound() {
+        const context = getAudioContext();
+        if (!context) return;
+
+        const now = context.currentTime;
+        const duration = 0.24;
+        const source = createNoiseSource(context, duration);
+        const filter = context.createBiquadFilter();
+        const volume = context.createGain();
+
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1500, now);
+        filter.frequency.exponentialRampToValueAtTime(350, now + duration);
+        volume.gain.setValueAtTime(0.0001, now);
+        volume.gain.exponentialRampToValueAtTime(0.18, now + 0.04);
+        volume.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+        source.connect(filter);
+        filter.connect(volume);
+        volume.connect(context.destination);
+        source.start(now);
+        source.stop(now + duration);
+    }
+
+    function playCollisionSound() {
+        const context = getAudioContext();
+        if (!context) return;
+
+        const now = context.currentTime;
+        const crackDuration = 0.07;
+        const crack = createNoiseSource(context, crackDuration);
+        const crackFilter = context.createBiquadFilter();
+        const crackVolume = context.createGain();
+        const bodyDuration = 0.14;
+        const body = createNoiseSource(context, bodyDuration);
+        const bodyFilter = context.createBiquadFilter();
+        const bodyVolume = context.createGain();
+        const thump = context.createOscillator();
+        const thumpVolume = context.createGain();
+
+        crackFilter.type = 'highpass';
+        crackFilter.frequency.setValueAtTime(1100, now);
+        crackVolume.gain.setValueAtTime(0.0001, now);
+        crackVolume.gain.exponentialRampToValueAtTime(0.42, now + 0.003);
+        crackVolume.gain.exponentialRampToValueAtTime(0.0001, now + crackDuration);
+        crack.connect(crackFilter);
+        crackFilter.connect(crackVolume);
+        crackVolume.connect(context.destination);
+        crack.start(now);
+        crack.stop(now + crackDuration);
+
+        bodyFilter.type = 'lowpass';
+        bodyFilter.frequency.setValueAtTime(650, now);
+        bodyFilter.frequency.exponentialRampToValueAtTime(150, now + bodyDuration);
+        bodyVolume.gain.setValueAtTime(0.0001, now);
+        bodyVolume.gain.exponentialRampToValueAtTime(0.3, now + 0.006);
+        bodyVolume.gain.exponentialRampToValueAtTime(0.0001, now + bodyDuration);
+        body.connect(bodyFilter);
+        bodyFilter.connect(bodyVolume);
+        bodyVolume.connect(context.destination);
+        body.start(now);
+        body.stop(now + bodyDuration);
+
+        thump.type = 'sine';
+        thump.frequency.setValueAtTime(145, now);
+        thump.frequency.exponentialRampToValueAtTime(48, now + bodyDuration);
+        thumpVolume.gain.setValueAtTime(0.0001, now);
+        thumpVolume.gain.exponentialRampToValueAtTime(0.55, now + 0.005);
+        thumpVolume.gain.exponentialRampToValueAtTime(0.0001, now + bodyDuration);
+        thump.connect(thumpVolume);
+        thumpVolume.connect(context.destination);
+        thump.start(now);
+        thump.stop(now + bodyDuration);
+    }
 
     // Input Control: ONLY Spacebar
     function handleKeyDown(e) {
@@ -99,6 +202,7 @@ function launchFlappyL() {
             e.preventDefault(); // Stop page scrolling
             if (gameRunning) {
                 bird.velocity = bird.lift;
+                playJumpSound();
             } else {
                 resetGame();
             }
@@ -153,11 +257,13 @@ function launchFlappyL() {
 
             // Collision detection
             if (
+                gameRunning &&
                 bird.x < pipes[i].x + pipeWidth &&
                 bird.x + bird.width > pipes[i].x &&
                 (bird.y < pipes[i].top || bird.y + bird.height > canvas.height - pipes[i].bottom - 40)
             ) {
                 gameRunning = false;
+                playCollisionSound();
             }
 
             // Scoring
