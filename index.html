@@ -1,67 +1,343 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alfredo Luzón | Software Engineer</title>
 
-	<title> Alfredo Luzon</title>
-	<link rel="stylesheet" href="s.css" type="text/css" media="screen" charset="utf-8">
+    <!-- Google Fonts & Tailwind CSS CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="s.css" type="text/css" media="screen" charset="utf-8">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Oxygen', 'sans-serif'],
+                    },
+                    colors: {
+                        slateBg: '#f8fafc',
+                        charcoal: '#1e293b',
+                        mutedGray: '#64748b',
+                        accentBlue: '#475569',
+                        cardBg: '#ffffff',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-	<h1 id="me" onmouseover="geek()" onmouseout="geekout()"> 
-	 allfre2<br> Ingeniero de Software
-	 </h1>
-	<div class="content">
-		<h2 id="yo"> Acerca de mi </h2>
-		<p> Ingeniero de Software especializado en Backend/FullStack con experiencia
-            desarrollando sistemas, servicios e integraciones para organizaciones nacionales (Republica Dominicana)
-            e internacionales en industrias como Propiedad Industrial, Servicios Financieros,
-            Seguridad Social, Zonas Francas y Comunicaciones.
-		</p>
-	</div>
-	<div class="contacto">
-		<h2 id="contactstring" onmouseover="anim()" onmouseout="restore()">Contacto</h2>
-	</div>
+<body class="min-h-screen flex flex-col justify-between selection:bg-slate-700 selection:text-white">
 
-	<script>
-	  var timer = 0, index = 1;
-	  var speed = 55;
-	  var writting = false;
-	  var contactaddr = "allfre2luzon@gmail.com";
-	  var contact = document.getElementById("contactstring");
-	  var original = contact.innerHTML;
-	  var title = " allfre2<br> Ingeniero de Software";
-	  var geektitle = "Alfredo Luzon <br> Ingeniero de Software";
-	  var me = document.getElementById("me");
+    <!-- Top Navigation / Language Bar -->
+    <header class="w-full max-w-4xl mx-auto px-6 pt-8 flex justify-between items-center">
+        <div class="text-xs uppercase tracking-widest font-bold text-slate-500">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+            <span data-i18n="navStatus">Available for Engineering Projects</span>
+        </div>
+        
+        <!-- Language Switcher -->
+        <div class="flex items-center bg-slate-200 p-1 rounded-lg text-sm font-semibold text-slate-700 shadow-inner">
+            <button id="btn-en" onclick="switchLang('en')" class="px-3 py-1 rounded-md transition-all bg-white text-slate-900 shadow-sm">EN</button>
+            <button id="btn-es" onclick="switchLang('es')" class="px-3 py-1 rounded-md transition-all text-slate-500 hover:text-slate-900">ES</button>
+        </div>
+    </header>
 
-	 function anim(){
-	  if(contact.innerHTML.length > 1 && !writting){
-	  contact.innerHTML = contact.innerHTML.substr(0,contact.innerHTML.length-1);
-	  }else{
-	   writting = true;
-	   speed = 70;
-	   contact.innerHTML = contactaddr.substr(0,index++);
-	  }
-	  if(contact.innerHTML != contactaddr)
-	   timer = setTimeout("anim()",speed);
-	   contact.innerHTML = contactaddr;
-	 }
+    <!-- Main Content Container -->
+    <main class="w-full max-w-4xl mx-auto px-6 py-12 flex-grow space-y-16">
 
-	 function restore(){
-	   if(timer){
-	    clearTimeout(timer);
-        timer = 0;
-		index = 1;
-		writting = false;
-		speed = 55;
-	   }
-	  contact.innerHTML = original;
-	 }
-	function geek(){
-	 me.innerHTML = geektitle;
-	}
+        <!-- Hero Section -->
+        <section class="text-center md:text-left border-b border-slate-200 pb-12">
+            <h1 id="me" 
+                class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 cursor-pointer select-none transition-all duration-300 hover:text-slate-700"
+                onmouseover="geek()" 
+                onmouseout="geekout()">
+                Alfredo Luzón<br>
+                <span class="text-2xl md:text-3xl font-light text-slate-600" data-i18n="roleTitle">Software Engineer</span>
+            </h1>
+            
+            <p data-i18n="bio" class="mt-6 text-lg text-slate-600 leading-relaxed max-w-3xl">
+                Software Engineer specializing in Backend/FullStack with years of experience building systems, microservices, and integrations for government organizations, private companies, and international teams across industries like Industrial Property, Financial Services, Social Security, and Communications.
+            </p>
 
-	function geekout(){
-	 me.innerHTML = title;
-	}
-	</script>
+            <!-- Quick Action Links -->
+            <div class="mt-8 flex flex-wrap gap-4 justify-center md:justify-start">
+                <a id="resume-link" href="./resources/Alfredo Luzón Resume.en.pdf" target="_blank" class="flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white rounded-lg text-sm font-medium hover:bg-slate-800 transition-all shadow-sm">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span data-i18n="btnResume">View Resume (PDF)</span>
+                </a>
+                <a href="https://github.com/allfre2" target="_blank" class="flex items-center gap-2 px-5 py-2.5 bg-slate-200 text-slate-800 rounded-lg text-sm font-medium hover:bg-slate-300 transition-all">
+                    <i class="fa-brands fa-github text-base"></i>
+                    <span>GitHub @allfre2</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Technical Skills / Stack Section -->
+        <section class="space-y-6">
+            <h2 data-i18n="techTitle" class="text-2xl font-bold text-slate-800 hover-shift inline-block border-l-4 border-slate-700 pl-3">
+                Tech Stack
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Core & Languages -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex items-center gap-2 text-slate-800 font-bold border-b border-slate-100 pb-2">
+                        <i class="fa-solid fa-code text-slate-600"></i>
+                        <h3 data-i18n="stackBackend">Backend & Languages</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">.NET Core 3.1 - 8</span>
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">C#</span>
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">Go (Golang)</span>
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">TypeScript</span>
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">Python</span>
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">Java</span>
+                    </div>
+                </div>
+
+                <!-- Databases -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex items-center gap-2 text-slate-800 font-bold border-b border-slate-100 pb-2">
+                        <i class="fa-solid fa-database text-slate-600"></i>
+                        <h3 data-i18n="stackDb">Databases</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">SQL Server / T-SQL</span>
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">Oracle / PL-SQL</span>
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">MySQL</span>
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">DynamoDB</span>
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">MongoDB</span>
+                    </div>
+                </div>
+
+                <!-- DevOps & Frontend -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex items-center gap-2 text-slate-800 font-bold border-b border-slate-100 pb-2">
+                        <i class="fa-solid fa-gears text-slate-600"></i>
+                        <h3 data-i18n="stackDevops">DevOps & Frontend</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">Jenkins</span>
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">Azure DevOps</span>
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">Angular</span>
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">REST APIs</span>
+                        <span class="tech-badge px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-semibold">CI/CD Pipelines</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects & GitHub Section -->
+        <section class="space-y-6">
+            <h2 data-i18n="projectsTitle" class="text-2xl font-bold text-slate-800 hover-shift inline-block border-l-4 border-slate-700 pl-3">
+                Projects & GitHub
+            </h2>
+
+            <p data-i18n="githubDesc" class="text-slate-600 text-base leading-relaxed">
+                Most of my public GitHub repositories are games, practice exercises, and side projects I build for fun or to challenge myself to master new technologies and design patterns.
+            </p>
+
+            <!-- Featured Repositories Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                
+                <!-- Project 1: Nino -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-slate-400 transition-all">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">C / WinBoard Protocol</span>
+                            <i class="fa-solid fa-chess-knight text-slate-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mt-2">Nino (Chess Engine)</h3>
+                        <p data-i18n="ninoDesc" class="text-sm text-slate-600 mt-2">
+                            Amateur Chess engine written in C implementing the CECP/WinBoard protocol. Features transposition tables, alpha-beta pruning, and tactical evaluation.
+                        </p>
+                    </div>
+                    <div class="mt-6 flex items-center gap-4">
+                        <a href="https://github.com/allfre2/nino" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 hover:text-slate-600 uppercase tracking-wider">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-2xs"></i> GitHub Repository
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2: 12tone -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-slate-400 transition-all">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Music Theory / Web App</span>
+                            <i class="fa-solid fa-music text-slate-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mt-2">12tone</h3>
+                        <p data-i18n="twelveToneDesc" class="text-sm text-slate-600 mt-2">
+                            Interactive music theory and harmonic exploration tool designed to visualize relationships between musical notes and scales.
+                        </p>
+                    </div>
+                    <div class="mt-6 flex items-center gap-4">
+                        <a href="https://github.com/allfre2/12tone" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 hover:text-slate-600 uppercase tracking-wider">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-2xs"></i> GitHub Repository
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- External Profiles & Contact Section -->
+        <section class="space-y-6 border-t border-slate-200 pt-12">
+            <h2 data-i18n="contactHeading" class="text-2xl font-bold text-slate-800 hover-shift inline-block border-l-4 border-slate-700 pl-3">
+                Contact & Profiles
+            </h2>
+
+            <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
+                <!-- Direct Contact Info -->
+                <div class="space-y-3">
+                    <div class="text-sm text-slate-500 font-semibold uppercase tracking-wider" data-i18n="contactDirect">Direct Contact</div>
+                    
+                    <!-- Email 1 -->
+                    <div class="text-base font-medium text-slate-900 flex items-center gap-2 justify-center md:justify-start">
+                        <i class="fa-solid fa-envelope text-slate-500"></i>
+                        <a href="mailto:allfre2luzon@gmail.com" class="hover:underline">allfre2luzon@gmail.com</a>
+                    </div>
+
+                    <!-- Email 2 -->
+                    <div class="text-base font-medium text-slate-900 flex items-center gap-2 justify-center md:justify-start">
+                        <i class="fa-solid fa-envelope text-slate-500"></i>
+                        <a href="mailto:alfredoluzon@gmail.com" class="hover:underline">alfredoluzon@gmail.com</a>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="text-base text-slate-700 flex items-center gap-2 justify-center md:justify-start">
+                        <i class="fa-solid fa-phone text-slate-500"></i>
+                        <a href="tel:+18099814106" class="hover:underline">+1 (809) 981-4106</a>
+                    </div>
+                </div>
+
+                <!-- Social Links Grid -->
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <a href="https://www.linkedin.com/in/alfredo-luz%C3%B3n-64a08218a/" target="_blank" class="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-sm font-semibold transition-all">
+                        <i class="fa-brands fa-linkedin text-blue-600"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://github.com/allfre2" target="_blank" class="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-sm font-semibold transition-all">
+                        <i class="fa-brands fa-github text-slate-900"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://www.codewars.com/users/allfre2" target="_blank" class="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-sm font-semibold transition-all">
+                        <i class="fa-solid fa-code text-red-500"></i>
+                        <span>Codewars</span>
+                    </a>
+                    <a href="https://www.youtube.com/@allfre2" target="_blank" class="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-sm font-semibold transition-all">
+                        <i class="fa-brands fa-youtube text-red-600"></i>
+                        <span>YouTube</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Simple Footer -->
+    <footer class="w-full max-w-4xl mx-auto px-6 py-8 text-center text-xs text-slate-500 border-t border-slate-200 mt-12">
+        <p>© Alfredo Luzón (allfre2). Built with clean HTML, Tailwind CSS & JavaScript.</p>
+    </footer>
+
+    <!-- Interactive Script -->
+    <script>
+        // Internationalization Data (English default)
+        const translations = {
+            en: {
+                navStatus: "Available for Software Engineering Projects",
+                roleTitle: "Software Engineer",
+                bio: "Software Engineer specializing in Backend/FullStack with years of experience building systems, microservices, and integrations for government organizations, private companies, and international teams across industries like Industrial Property, Financial Services, Social Security, and Communications.",
+                btnResume: "View Resume (PDF)",
+                techTitle: "Tech Stack",
+                stackBackend: "Backend & Languages",
+                stackDb: "Databases",
+                stackDevops: "DevOps & Frontend",
+                projectsTitle: "Projects & GitHub",
+                githubDesc: "Most of my public GitHub repositories are games, practice exercises, and side projects I build for fun or to challenge myself to master new technologies and design patterns.",
+                ninoDesc: "Amateur Chess engine written in C implementing the CECP/WinBoard protocol. Features transposition tables, alpha-beta pruning, and tactical evaluation.",
+                twelveToneDesc: "Interactive music theory and harmonic exploration tool designed to visualize relationships between musical notes and scales.",
+                contactHeading: "Contact & Profiles",
+                contactDirect: "Direct Contact",
+                defaultTitle: "Alfredo Luzón",
+                hoverTitle: "allfre2",
+                resumePath: "./resources/Alfredo Luzón Resume.en.pdf"
+            },
+            es: {
+                navStatus: "Disponible para Proyectos de Ingeniería",
+                roleTitle: "Ingeniero de Software",
+                bio: "Ingeniero de Software especializado en Backend/FullStack con años de experiencia desarrollando sistemas, servicios e integraciones para organizaciones gubernamentales, empresas privadas y equipos internacionales en industrias como Propiedad Industrial, Servicios Financieros, Seguridad Social, Zonas Francas y Comunicaciones.",
+                btnResume: "Ver Currículum (PDF)",
+                techTitle: "Stack Tecnológico",
+                stackBackend: "Backend & Lenguajes",
+                stackDb: "Bases de Datos",
+                stackDevops: "DevOps & Frontend",
+                projectsTitle: "Proyectos & GitHub",
+                githubDesc: "La mayoría de mis repositorios públicos en GitHub son juegos, ejercicios prácticos y experimentos que desarrollo por diversión o como reto personal para aprender nuevas tecnologías y arquitecturas.",
+                ninoDesc: "Motor de ajedrez escrito en C que implementa el protocolo CECP/WinBoard. Soporta tablas de transposición, poda alfa-beta y evaluación táctica.",
+                twelveToneDesc: "Herramienta de teoría musical y exploración armónica interactiva creada para visualizar relaciones entre notas y escalas.",
+                contactHeading: "Contacto & Perfiles",
+                contactDirect: "Contacto Directo",
+                defaultTitle: "Alfredo Luzón",
+                hoverTitle: "allfre2",
+                resumePath: "./resources/Alfredo Luzón Resume.es.pdf"
+            }
+        };
+
+        let currentLang = 'en';
+        const me = document.getElementById("me");
+
+        function switchLang(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+
+            // Update all text elements using data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) {
+                    el.innerText = t[key];
+                }
+            });
+
+            // Update resume link dynamically based on language
+            document.getElementById('resume-link').setAttribute('href', t.resumePath);
+
+            // Update title state references
+            defaultTitle = t.defaultTitle;
+            hoverTitle = t.hoverTitle;
+            me.innerHTML = `${defaultTitle}<br><span class="text-2xl md:text-3xl font-light text-slate-600">${t.roleTitle}</span>`;
+
+            // Toggle active button style
+            if(lang === 'en') {
+                document.getElementById('btn-en').className = "px-3 py-1 rounded-md transition-all bg-white text-slate-900 shadow-sm";
+                document.getElementById('btn-es').className = "px-3 py-1 rounded-md transition-all text-slate-500 hover:text-slate-900";
+            } else {
+                document.getElementById('btn-es').className = "px-3 py-1 rounded-md transition-all bg-white text-slate-900 shadow-sm";
+                document.getElementById('btn-en').className = "px-3 py-1 rounded-md transition-all text-slate-500 hover:text-slate-900";
+            }
+        }
+
+        // Name Hover Animation (Alfredo Luzón <-> allfre2)
+        let defaultTitle = translations.en.defaultTitle;
+        let hoverTitle = translations.en.hoverTitle;
+
+        function geek() {
+            const role = translations[currentLang].roleTitle;
+            me.innerHTML = `${hoverTitle}<br><span class="text-2xl md:text-3xl font-light text-slate-600">${role}</span>`;
+        }
+
+        function geekout() {
+            const role = translations[currentLang].roleTitle;
+            me.innerHTML = `${defaultTitle}<br><span class="text-2xl md:text-3xl font-light text-slate-600">${role}</span>`;
+        }
+    </script>
 </body>
 </html>
